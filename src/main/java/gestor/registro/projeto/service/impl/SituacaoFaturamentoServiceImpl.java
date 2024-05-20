@@ -3,6 +3,7 @@ package gestor.registro.projeto.service.impl;
 import static gestor.registro.lib.utils.GestaoProjetoUtils.getMensagem;
 import static gestor.registro.lib.utils.GestaoProjetoUtils.toConvertReflection;
 
+import gestor.registro.lib.utils.GestaoProjetoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ import gestor.registro.projeto.mapper.SituacaoFaturamentoMapper;
 import gestor.registro.projeto.repository.SituacaoFaturamentoProjetoRepository;
 import gestor.registro.projeto.service.SituacaoFaturamentoService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -32,6 +36,17 @@ public class SituacaoFaturamentoServiceImpl implements SituacaoFaturamentoServic
 		situacaoRepository.save(situacaoFaturamento);
 		
 		return "Situacao Registrada com sucesso";
+	}
+
+	@Override
+	public List<SituacaoFaturamentoDto> listarSituacaoFaturamento() {
+		List<SituacaoFaturamentoDto> lsSituacaoDto = new ArrayList<SituacaoFaturamentoDto>();
+		List<SituacaoFaturamentoProjeto> lsSituacaoFaturamento = situacaoRepository.findAll();
+
+		lsSituacaoFaturamento.forEach(situacao -> {
+			lsSituacaoDto.add(toConvertReflection(situacao, SituacaoFaturamentoDto.class));
+		});
+		return lsSituacaoDto;
 	}
 
 }

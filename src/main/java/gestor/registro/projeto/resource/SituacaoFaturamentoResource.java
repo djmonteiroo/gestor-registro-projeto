@@ -1,16 +1,18 @@
 package gestor.registro.projeto.resource;
 
+import gestor.registro.lib.dto.SituacaoFaturamentoDto;
+import gestor.registro.lib.entity.SituacaoFaturamentoProjeto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import gestor.registro.lib.records.SituacaoFaturamentoRecord;
 import gestor.registro.lib.utils.dto.GestaoProjetoResource;
 import gestor.registro.lib.utils.dto.GestaoProjetoResponse;
 import gestor.registro.projeto.service.SituacaoFaturamentoService;
+
+import java.util.List;
 
 //@Controller
 @RestController
@@ -30,5 +32,10 @@ public class SituacaoFaturamentoResource implements GestaoProjetoResource {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@GetMapping
+	public ResponseEntity<GestaoProjetoResponse<List<SituacaoFaturamentoDto>>> listarSituacaoFaturamento(){
+		return retornarResponse(HttpStatus.OK, situacaoFaturamentoService.listarSituacaoFaturamento());
 	}
 }

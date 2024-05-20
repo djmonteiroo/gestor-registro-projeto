@@ -2,6 +2,7 @@ package gestor.registro.projeto.mapper;
 
 import java.time.LocalDateTime;
 
+import gestor.registro.lib.records.SituacaoFaturamentoRecord;
 import org.springframework.stereotype.Component;
 
 import gestor.registro.lib.dto.SituacaoFaturamentoDto;
