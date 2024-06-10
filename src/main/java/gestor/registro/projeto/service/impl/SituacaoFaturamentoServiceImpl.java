@@ -3,7 +3,7 @@ package gestor.registro.projeto.service.impl;
 import static gestor.registro.lib.utils.GestaoProjetoUtils.getMensagem;
 import static gestor.registro.lib.utils.GestaoProjetoUtils.toConvertReflection;
 
-import gestor.registro.lib.utils.GestaoProjetoUtils;
+import gestor.registro.projeto.utils.GestorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,7 @@ import gestor.registro.projeto.repository.SituacaoFaturamentoProjetoRepository;
 import gestor.registro.projeto.service.SituacaoFaturamentoService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +45,34 @@ public class SituacaoFaturamentoServiceImpl implements SituacaoFaturamentoServic
 		List<SituacaoFaturamentoProjeto> lsSituacaoFaturamento = situacaoRepository.findAll();
 
 		lsSituacaoFaturamento.forEach(situacao -> {
-			lsSituacaoDto.add(toConvertReflection(situacao, SituacaoFaturamentoDto.class));
+			SituacaoFaturamentoDto situacaoFaturamento = toConvertReflection(situacao, SituacaoFaturamentoDto.class);
+			situacaoFaturamento.setDtInclusaoSaida(GestorUtils.tratamentoSaidaData(situacaoFaturamento.getDtInclusao()));
+			lsSituacaoDto.add(situacaoFaturamento);
 		});
 		return lsSituacaoDto;
 	}
+	@Override
+	public String desativarSituacaoFaturamento(Long idLSituacaoFaturamento) {
+		log.info(getMensagem("Desativando Status de Faturamento para o id: ", idLSituacaoFaturamento));
+		log.info("Buscando dados");
+		SituacaoFaturamentoProjeto situacaoFaturamentoProjeto = situacaoRepository.findById(idLSituacaoFaturamento).get();
+		situacaoFaturamentoProjeto.setInAtivo(0);
+		log.info("Salvando atualizações");
+		situacaoRepository.save(situacaoFaturamentoProjeto);
+		return "Desativado com sucesso";
+	}
+
+	@Override
+	public String ativarSituacaoFaturamento(Long idLSituacaoFaturamento) {
+		log.info(getMensagem("Ativando Status de Faturamento para o id: ", idLSituacaoFaturamento));
+		log.info("Buscando dados");
+		SituacaoFaturamentoProjeto situacaoFaturamentoProjeto = situacaoRepository.findById(idLSituacaoFaturamento).get();
+		situacaoFaturamentoProjeto.setInAtivo(1);
+		log.info("Salvando atualizações");
+		situacaoRepository.save(situacaoFaturamentoProjeto);
+		return "Ativado com sucesso";
+	}
+
+
 
 }

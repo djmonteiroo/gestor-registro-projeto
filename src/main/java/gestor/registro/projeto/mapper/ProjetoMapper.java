@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import gestor.registro.lib.dto.ProjetoDTO;
 import gestor.registro.lib.entity.EquipeProjeto;
 import gestor.registro.lib.entity.Projeto;
-import gestor.registro.lib.entity.ResponsavelProjeto;
+import gestor.registro.lib.entity.Colaborador;
 import gestor.registro.lib.entity.SituacaoFaturamentoProjeto;
 import gestor.registro.lib.entity.SituacaoProjeto;
 
@@ -26,10 +26,10 @@ public class ProjetoMapper {
 		equipeProjeto.setIdEquipe(dto.getIdEquipeProjeto());
 		projeto.setEquipeProjeto(equipeProjeto);
 		
-		ResponsavelProjeto responsavelProjeto = new ResponsavelProjeto();
-		responsavelProjeto.setIdResponsavelProjeto(dto.getIdResponsavelProjeto());
+		Colaborador Colaborador = new Colaborador();
+		Colaborador.setIdColaborador(dto.getIdResponsavelProjeto());
 		
-		projeto.setResponsavelProjeto(responsavelProjeto);
+		projeto.setColaborador(Colaborador);
 		
 		projeto.setValorTotal(dto.getValorTotal());
 		projeto.setDtOrcamentacao(dto.getDtOrcamentacao());

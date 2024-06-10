@@ -23,3 +23,13 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
 #    hibernate:
 #      ddl-auto: create
+
+# Configurações de Porta
+server:
+  port: 8081
+
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-url: http://localhost:8080/realm/configep

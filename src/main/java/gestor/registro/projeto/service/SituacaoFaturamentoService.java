@@ -13,4 +13,8 @@ public interface SituacaoFaturamentoService {
 	public String registrarSituacaoFaturamento(final SituacaoFaturamentoRecord situacaoRecord);
 
     public List<SituacaoFaturamentoDto> listarSituacaoFaturamento();
+
+    String desativarSituacaoFaturamento(final Long idLSituacaoFaturamento);
+
+    String ativarSituacaoFaturamento(final Long idLSituacaoFaturamento);
 }

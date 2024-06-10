@@ -1,17 +1,19 @@
 package gestor.registro.projeto.resource;
 
+import gestor.registro.lib.dto.SituacaoFaturamentoDto;
+import gestor.registro.lib.dto.SituacaoProjetoDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import gestor.registro.lib.records.SituacaoProjetoRecord;
 import gestor.registro.lib.utils.dto.GestaoProjetoResource;
 import gestor.registro.lib.utils.dto.GestaoProjetoResponse;
 import gestor.registro.projeto.service.SituacaoProjetoService;
+
+import java.util.List;
 
 @Controller
 //@RestController
@@ -32,9 +34,19 @@ public class SituacaoProjetoResource implements GestaoProjetoResource {
 		}
 		return null;
 	}
-	
+
 	@GetMapping
-	public String situacaoProjeto() {
-		return "situacaoProjeto/situacaoProjeto";
+	public ResponseEntity<GestaoProjetoResponse<List<SituacaoProjetoDto>>> listarSituacaoProjeto(){
+		return retornarResponse(HttpStatus.OK, situacaoService.listarSituacaProjeto());
+	}
+
+	@PutMapping("/desativar/{idSituacaoProjeto}")
+	public ResponseEntity<GestaoProjetoResponse<String>> desativarSituacaoProjeto(@PathVariable("idSituacaoProjeto") Long idSituacaoProjeto){
+		return retornarResponse(HttpStatus.OK, situacaoService.desativarSituacaoProjeto(idSituacaoProjeto));
+	}
+
+	@PutMapping("/ativar/{idSituacaoProjeto}")
+	public ResponseEntity<GestaoProjetoResponse<String>> ativarSituacaoProjeto(@PathVariable("idSituacaoProjeto") Long idSituacaoProjeto){
+		return retornarResponse(HttpStatus.OK, situacaoService.ativarSituacaoProjeto(idSituacaoProjeto));
 	}
 }

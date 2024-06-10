@@ -2,6 +2,7 @@ package gestor.registro.projeto.resource;
 
 import gestor.registro.lib.dto.SituacaoFaturamentoDto;
 import gestor.registro.lib.entity.SituacaoFaturamentoProjeto;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,15 @@ public class SituacaoFaturamentoResource implements GestaoProjetoResource {
 	@GetMapping
 	public ResponseEntity<GestaoProjetoResponse<List<SituacaoFaturamentoDto>>> listarSituacaoFaturamento(){
 		return retornarResponse(HttpStatus.OK, situacaoFaturamentoService.listarSituacaoFaturamento());
+	}
+
+	@PutMapping("/desativar/{idSituacaoFaturamento}")
+	public ResponseEntity<GestaoProjetoResponse<String>> desativarSituacaoFaturamento(@PathVariable("idSituacaoFaturamento") Long idLSituacaoFaturamento){
+		return retornarResponse(HttpStatus.OK, situacaoFaturamentoService.desativarSituacaoFaturamento(idLSituacaoFaturamento));
+	}
+
+	@PutMapping("/ativar/{idSituacaoFaturamento}")
+	public ResponseEntity<GestaoProjetoResponse<String>> ativarSituacaoFaturamento(@PathVariable("idSituacaoFaturamento") Long idLSituacaoFaturamento){
+		return retornarResponse(HttpStatus.OK, situacaoFaturamentoService.ativarSituacaoFaturamento(idLSituacaoFaturamento));
 	}
 }
